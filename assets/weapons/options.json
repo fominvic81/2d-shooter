@@ -1,0 +1,67 @@
+
+{
+    "sprites": {
+        "names": ["ak47", "fist", "knife", "rocket"],
+        "fist": {
+            "name": "fist",
+            "x": 0,
+            "y": 0,
+            "angle": 0,
+            "fireAnimation": "hit",
+            "rechargeTime": 0.5,
+            "capacity": 1,
+            "timeBetweenShots": 0.1,
+            "knockback": -0.4,
+            "attackClass": "short",
+            "maxZoom": 1
+        },
+        "ak47": {
+            "name": "ak47",
+            "x": -20,
+            "y": -2,
+            "angle": 0,
+            "image": "ak47.png",
+            "width": 40,
+            "height": 16,
+            "fireAnimation": "fire",
+            "rechargeTime": 2,
+            "capacity": 30,
+            "timeBetweenShots": 0.1,
+            "knockback": 0.04,
+            "attackClass": "far",
+            "maxZoom": 2
+        },
+        "knife": {
+            "name": "knife",
+            "x": -18,
+            "y": -12,
+            "angle": 1.5707963267948966,
+            "image": "knife.png",
+            "width": 40,
+            "height": 8,
+            "fireAnimation": "hit",
+            "rechargeTime": 0.5,
+            "capacity": 1,
+            "timeBetweenShots": 0.1,
+            "knockback": -0.4,
+            "attackClass": "short",
+            "maxZoom": 1
+        },
+        "rocket": {
+            "name": "rocket",
+            "x": -10,
+            "y": -5,
+            "angle": 0,
+            "image": "rocket.png",
+            "width": 60,
+            "height": 30,
+            "fireAnimation": "fire",
+            "rechargeTime": 5,
+            "capacity": 3,
+            "timeBetweenShots": 1,
+            "knockback": 0,
+            "attackClass": "far",
+            "maxZoom": 4
+        }
+    }
+}
