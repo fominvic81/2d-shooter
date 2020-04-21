@@ -6,7 +6,10 @@ import {
     Mouse,
     MouseConstraint,
     Composite,
+    Vertices,
+    Body,
 } from 'matter-js';
+import io from 'socket.io-client';
 import { createLayout } from './interface/layout.js';
 
 export const initApp = (handleStart, handleResize, handleUpdate, handleRender, handleLoad) => {
@@ -58,7 +61,8 @@ export const initApp = (handleStart, handleResize, handleUpdate, handleRender, h
         const layout = createLayout(x, y, width, height);
 
         layouts.push(layout);
-
+        layout.resize(data.width, data.height);
+        
         return layout;
     }
 
@@ -101,15 +105,36 @@ export const initApp = (handleStart, handleResize, handleUpdate, handleRender, h
     const engine = Engine.create();
     const world = engine.world;
     const runner = Runner.create({fps: 40});
-    const mouse = Mouse.create(interFace.canvas);
-    const mouseConstraint = MouseConstraint.create(engine, {
-            mouse: mouse,
-            constraint: {
-                stiffness: 1,
-            }
-        });
 
+    const bodies = new Map();
+
+    const socket = io('http://192.168.1.52:5860', {
+        transports: ['websocket']
+    });
     
+    socket.on('serverAddBody', function (data) {
+        const body = Body.create(data.options);
+        Body.setPosition(body, Vertices.centre(data.options.vertices));
+        
+        bodies.set(data.id, body);
+        World.add(world, body);
+    });
+
+    socket.on('serverSetBody', function (data) {
+        const body = bodies.get(data.id);
+        Body.setVelocity(body, data.options.velocity);
+        Body.setPosition(body, data.options.position);
+        body.isSleeping = data.options.isSleeping;
+        Body.setAngularVelocity(body, data.options.angularVelocity);
+        Body.setAngle(body, data.options.angle);
+    });
+
+    socket.on('serverRemoveBody', function (data) {
+        World.remove(world, bodies.get(data.id))
+        bodies.delete(data.id);
+    });
+
+
     const render = () => {
         
         for (const layer of layers) {
@@ -134,9 +159,6 @@ export const initApp = (handleStart, handleResize, handleUpdate, handleRender, h
         
         draw.ctx.fillStyle = 'rgb(32, 32, 32)';
         draw.ctx.fillRect(0, 0, draw.canvas.width, draw.canvas.height)
-
-        Mouse.setScale(mouse, {x: renderWidth / draw.canvas.width, y: renderHeight / draw.canvas.height});
-        Mouse.setOffset(mouse, renderOptions.bounds.min);
 
         draw.ctx.translate(draw.canvas.width / 2, draw.canvas.height / 2);
         draw.ctx.scale(draw.canvas.width / renderWidth, draw.canvas.height / renderHeight);
@@ -220,7 +242,6 @@ export const initApp = (handleStart, handleResize, handleUpdate, handleRender, h
     const start = () => {
         data.started = true;
         Runner.run(runner, engine);
-        World.add(world, mouseConstraint);
         engine.enableSleeping = true;
         resize();
         handleStart();
@@ -228,10 +249,6 @@ export const initApp = (handleStart, handleResize, handleUpdate, handleRender, h
         update();
         render();
     };
-
-    Events.on(engine, 'afterUpdate', function(event) {
-        // update(event.timestamp);
-    });
 
     window.addEventListener('keydown', event => {
 		keys[event.key] = true;
@@ -291,24 +308,17 @@ export const initApp = (handleStart, handleResize, handleUpdate, handleRender, h
         }
     });
 
-    // Events.on(mouseConstraint, "mousedown", function (event) {
-    //     console.log('mouse!!!');
-    //     for (const layout of layouts) layout.touchStart(event.mouse.absolute.x, event.mouse.absolute.y, {identifier: 1000});
-    // });
-    // Events.on(mouseConstraint, "mouseup", function (event) {
-    //     for (const layout of layouts) layout.touchEnd(event.mouse.absolute.x, event.mouse.absolute.y, {identifier: 1000});
-    // });
-    // Events.on(mouseConstraint, "mousemove", function (event) {
-    //     for (const layout of layouts) layout.touchMove(event.mouse.absolute.x, event.mouse.absolute.y, {identifier: 1000});
-    // });
 
     return {
         keys,
         data,
         engine,
         world,
+        socket,
+        bodies,
 
         setBounds(x0, y0, width, height = width * (data.height / data.width)) {
+
 
             renderOptions.bounds.min = { x: x0 - width/2, y: y0 - height/2 };
             renderOptions.bounds.max = { x: x0 + width/2, y: y0 + height/2 };

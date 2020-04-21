@@ -5,37 +5,37 @@
         "names": ["leftFoot", "rightFoot", "leftHand", "stomach", "head", "weapon", "rightHand"],
         "head": {
             "image": "head.png",
-            "width": 28,
-            "height": 28,
+            "width": 84,
+            "height": 84,
             "parent": "stomach"
         },
         "stomach": {
             "image": "stomach.png",
-            "width": 28,
-            "height": 28
+            "width": 84,
+            "height": 84
         },
         "leftFoot": {
             "image": "leftFoot.png",
-            "width": 20,
-            "height": 28,
+            "width": 60,
+            "height": 84,
             "parent": "stomach"
         },
         "rightFoot": {
             "image": "rightFoot.png",
-            "width": 20,
-            "height": 28,
+            "width": 60,
+            "height": 84,
             "parent": "stomach"
         },
         "leftHand": {
             "image": "leftHand.png",
-            "width": 40,
-            "height": 10,
+            "width": 120,
+            "height": 30,
             "parent": "stomach"
         },
         "rightHand": {
             "image": "rightHand.png",
-            "width": 40,
-            "height": 10,
+            "width": 120,
+            "height": 30,
             "parent": "stomach"
         },
         "weapon": {
@@ -46,12 +46,12 @@
         "idle": {
             "steps": [
                 {
-                    "head": [0, -18, 0],
-                    "stomach": [0, 5, 0],
-                    "leftFoot": [-8, 6, 0],
-                    "rightFoot": [2, 6, 0],
-                    "leftHand": [-6, -8, -1.2],
-                    "rightHand": [8, -5, -1.5],
+                    "head": [0, -54, 0],
+                    "stomach": [0, 15, 0],
+                    "leftFoot": [-24, 18, 0],
+                    "rightFoot": [6, 18, 0],
+                    "leftHand": [-18, -24, -1.2],
+                    "rightHand": [24, -15, -1.5],
                     "stepTime": 0.1
                 }
             ]
@@ -60,59 +60,59 @@
         "go": {
             "steps": [
                 {
-                    "leftFoot": [-8, 4, 0],
-                    "rightFoot": [2, 8, 0],
-                    "leftHand": [-6, -8, -0.7],
-                    "rightHand": [6, -5, -2],
+                    "leftFoot": [-24, 12, 0],
+                    "rightFoot": [6, 24, 0],
+                    "leftHand": [-18, -24, -0.7],
+                    "rightHand": [18, -15, -2],
                     "stepTime": 0.2
                 },
                 {
-                    "leftFoot": [-8, 8, -0.4],
-                    "rightFoot": [2, 4, 0.4],
-                    "leftHand": [-6, -8, -0.95],
-                    "rightHand": [6, -5, -1.75],
+                    "leftFoot": [-24, 24, -0.4],
+                    "rightFoot": [6, 12, 0.4],
+                    "leftHand": [-18, -24, -0.95],
+                    "rightHand": [18, -15, -1.75],
                     "stepTime": 0.2
                 },
                 {
-                    "leftFoot": [-8, 4, 0],
-                    "rightFoot": [2, 8, 0],
-                    "leftHand": [-6, -8, -1.2],
-                    "rightHand": [6, -5, -1.5],
+                    "leftFoot": [-24, 12, 0],
+                    "rightFoot": [6, 24, 0],
+                    "leftHand": [-18, -24, -1.2],
+                    "rightHand": [18, -15, -1.5],
                     "stepTime": 0.2
                 },
                 {
-                    "leftFoot": [-8, 8, 0.4],
-                    "rightFoot": [2, 4, -0.4],
-                    "leftHand": [-6, -8, -1.45],
-                    "rightHand": [6, -5, -1.25],
+                    "leftFoot": [-24, 24, 0.4],
+                    "rightFoot": [6, 12, -0.4],
+                    "leftHand": [-18, -24, -1.45],
+                    "rightHand": [18, -15, -1.25],
                     "stepTime": 0.2
                 },
                 {
-                    "leftFoot": [-8, 4, 0],
-                    "rightFoot": [2, 8, 0],
-                    "leftHand": [-6, -8, -1.7],
-                    "rightHand": [6, -5, -1],
+                    "leftFoot": [-24, 12, 0],
+                    "rightFoot": [6, 24, 0],
+                    "leftHand": [-18, -24, -1.7],
+                    "rightHand": [18, -15, -1],
                     "stepTime": 0.2
                 },
                 {
-                    "leftFoot": [-8, 8, -0.4],
-                    "rightFoot": [2, 4, 0.4],
-                    "leftHand": [-6, -8, -1.45],
-                    "rightHand": [6, -5, -1.25],
+                    "leftFoot": [-24, 24, -0.4],
+                    "rightFoot": [6, 12, 0.4],
+                    "leftHand": [-18, -24, -1.45],
+                    "rightHand": [18, -15, -1.25],
                     "stepTime": 0.2
                 },
                 {
-                    "leftFoot": [-8, 4, 0],
-                    "rightFoot": [2, 8, 0],
-                    "leftHand": [-6, -8, -1.2],
-                    "rightHand": [6, -5, -1.5],
+                    "leftFoot": [-24, 12, 0],
+                    "rightFoot": [6, 24, 0],
+                    "leftHand": [-18, -24, -1.2],
+                    "rightHand": [18, -15, -1.5],
                     "stepTime": 0.2
                 },
                 {
-                    "leftFoot": [-8, 8, 0.4],
-                    "rightFoot": [2, 4, -0.4],
-                    "leftHand": [-6, -8, -0.95],
-                    "rightHand": [6, -5, -1.75],
+                    "leftFoot": [-24, 24, 0.4],
+                    "rightFoot": [6, 12, -0.4],
+                    "leftHand": [-18, -24, -0.95],
+                    "rightHand": [18, -15, -1.75],
                     "stepTime": 0.2
                 }
             ]
@@ -121,8 +121,8 @@
             "steps": [
                 {
                     "stomach": [0, 10, 0],
-                    "leftFoot": [-8, 12, -1.5707963267948966],
-                    "rightFoot": [2, 12, -1.5707963267948966],
+                    "leftFoot": [-24, 12, -1.5707963267948966],
+                    "rightFoot": [6, 12, -1.5707963267948966],
                     "stepTime": 0.1
                 }
             ]
@@ -130,13 +130,13 @@
         "fire": {
             "steps": [
                 {
-                    "leftHand": [-6, -8, 0.5],
-                    "rightHand": [6, -5, 0.5],
+                    "leftHand": [-18, -24, 0.5],
+                    "rightHand": [18, -15, 0.5],
                     "stepTime": 0.1
                 },
                 {
-                    "leftHand": [-8, -8, 0.5],
-                    "rightHand": [4, -5, 0.5],
+                    "leftHand": [-24, -24, 0.5],
+                    "rightHand": [12, -15, 0.5],
                     "stepTime": 0.1
                 }
             ]
@@ -145,23 +145,23 @@
         "hit": {
             "steps": [
                 {
-                    "rightHand": [6, -5, 6],
+                    "rightHand": [18, -15, 6],
                     "stepTime": 0.01
                 },
                 {
-                    "rightHand": [6, -5, 4],
+                    "rightHand": [18, -15, 4],
                     "stepTime": 0.01
                 },
                 {
-                    "rightHand": [6, -5, 2],
+                    "rightHand": [18, -15, 2],
                     "stepTime": 0.01
                 },
                 {
-                    "rightHand": [6, -5, 2],
+                    "rightHand": [18, -15, 2],
                     "stepTime": 0.05
                 },
                 {
-                    "rightHand": [6, -5, -0.9],
+                    "rightHand": [18, -15, -0.9],
                     "stepTime": 0.2
                 }
             ]

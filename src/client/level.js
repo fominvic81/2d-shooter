@@ -2,22 +2,16 @@ import {
 	World,
 } from 'matter-js';
 
-export const createLevel = (level, app) => {
+export const createLevel = (app) => {
     return {
         app: app,
         world: app.world,
         entities: new Map(),
         isS: false,
 
-        setup () {
-            this.isS = true;
-            for (const body of level.bodies) {
-                World.add(this.world, body);
-            }
-        },
+
 
         update (dt) {
-            if (!this.isS) this.setup();
 
             for (const entity of this.entities.values()) {
                 entity.update(dt);
@@ -35,17 +29,14 @@ export const createLevel = (level, app) => {
             World.add(this.world, body);
         },
 
-        addEntity (entity) {
-            if (entity.getBody()) {
-                World.add(this.world, entity.getBody());
-            }
-            entity.id = Symbol('id');
+        addEntity (entity, id, bodyId) {
+            entity.id = id;
+            entity.body = this.app.bodies.get(bodyId);
             this.entities.set(entity.id, entity);
         },
 
-        removeEntity (entity) {
-            World.remove(this.world, entity.getBody());
-            this.entities.delete(entity.id);
+        removeEntity (id) {
+            this.entities.delete(id);
         },
 
     }

@@ -7,7 +7,7 @@ const dev = process.env.NODE_ENV === 'development';
 
 module.exports = {
     devtool: dev ? 'eval-source-map' : false,
-    entry: './src/index.js',
+    entry: './src/client/index.js',
 
     output: {
         filename: 'main.js',
@@ -19,7 +19,7 @@ module.exports = {
             { from: './assets', to: 'assets' },
         ]),
         new HtmlWebpackPlugin({
-            template: 'src/index.html',
+            template: 'src/client/index.html',
         }),
     ],
 };

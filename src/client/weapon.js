@@ -1,7 +1,7 @@
 import { Body, Bodies } from 'matter-js';
 import { draw } from './sprite.js';
 
-export const weapon = (level, options, sprites, body, resize) => {
+export const weapon = (level, options, sprites, body) => {
     return {
         level: level,
         name: options.name,
@@ -24,7 +24,6 @@ export const weapon = (level, options, sprites, body, resize) => {
         isRecharging: false,
         sprites: sprites,
         body: body,
-        resize: resize,
         zoom: options.maxZoom,
 
         update (dt) {
@@ -41,16 +40,18 @@ export const weapon = (level, options, sprites, body, resize) => {
             if (typeof(this.image) === 'string' || this.image === undefined) {
                 this.image = options.image;
             } else {
-                this.sprites.animations.sprites.weapon = {
-                    image: this.image,
-                    width: this.width,
-                    height: this.height,
-                };
 
-                this.sprites.animations.states.weapon.steps[0]['weapon'][0] = this.x;
-                this.sprites.animations.states.weapon.steps[0]['weapon'][1] = this.y;
-                this.sprites.animations.states.weapon.steps[0]['weapon'][2] = this.angle;
+                this.sprites.animations.sprites.weapon.image = this.image;
+                this.sprites.animations.sprites.weapon.width = this.width;
+                this.sprites.animations.sprites.weapon.height = this.height;
+
                 this.sprites.addState('weapon');
+                if (this.sprites.sprites['weapon']) {
+                    // console.log('+');
+                    this.sprites.sprites['weapon']['nx'].step = this.x;
+                    this.sprites.sprites['weapon']['ny'].step = this.y;
+                    this.sprites.sprites['weapon']['nangle'].step = this.angle;
+                }
             }
         },
         
@@ -62,14 +63,14 @@ export const weapon = (level, options, sprites, body, resize) => {
                 if (this.shotTimer >= this.timeBetweenShots) {
                     this.shotTimer = 0;
                     --this.projectilesCount;
-                    Body.applyForce(this.body, this.body.position, {x: -Math.cos(angle) * this.knockback, y: -Math.sin(angle) * this.knockback});
+                    // Body.applyForce(this.body, this.body.position, {x: -Math.cos(angle) * this.knockback, y: -Math.sin(angle) * this.knockback});
+                    
+                    // const a = Bodies.rectangle(x + 80 * Math.cos(angle), y + 240 * Math.sin(angle), 20, 20, {mass: 0.5, restitution: 0});
+                    // this.level.addBody(a);
 
-                    const a = Bodies.rectangle(x + 80 * Math.cos(angle), y + 240 * Math.sin(angle), 20, 20, {mass: 0.5, restitution: 0});
-                    this.level.addBody(a);
+                    // Body.applyForce(a, a.position, {x: 0.05 * Math.cos(angle), y: 0.05 * Math.sin(angle)});
 
-                    Body.applyForce(a, a.position, {x: 0.05 * Math.cos(angle), y: 0.05 * Math.sin(angle)});
-
-                    this.sprites.addState(this.fireAnimation, true);
+                    // this.sprites.addState(this.fireAnimation, true);
 
                     return true;
                 }

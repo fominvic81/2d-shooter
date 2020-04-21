@@ -1,4 +1,4 @@
-import { dist } from '../common.js';
+import { dist } from '../../common.js';
 
 
 export const createJoystick = (x, y, r, autoRecovery, events = {}) => {

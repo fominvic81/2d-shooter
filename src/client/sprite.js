@@ -1,12 +1,12 @@
 
-export const draw = (ctx, img, x, y, width, height, angle, resize) => {
+export const draw = (ctx, img, x, y, width, height, angle) => {
     ctx.save();
     
     ctx.translate(x, y);
     ctx.rotate(angle);
     
-    ctx.translate(-width/2 * resize, -height/2 * resize);
-    ctx.drawImage(img, 0, 0, width * resize, height * resize);
+    ctx.translate(-width/2, -height/2);
+    ctx.drawImage(img, 0, 0, width, height);
     
     ctx.restore();
 }
@@ -22,11 +22,10 @@ export const sprite = (img, x, y, width, height, angle) => {
     }
 }
 
-export const sprites = (animations, resize, states, body) => {
+export const sprites = (animations, states, entity) => {
     return {
         animations: animations,
-        resize: resize,
-        body: body,
+        entity: entity,
         dir: 1,
         states: states,
         stepNumber: {},
@@ -113,6 +112,7 @@ export const sprites = (animations, resize, states, body) => {
                         if (!this.animations.sprites[name].image) return false;
                         for (const s of this.states) {
                             const state = s.state;
+                            if (!this.animations.states[state]) continue;
                             const steps = this.animations.states[state].steps[this.stepNumber[state]];
                             if (steps && steps[this.name] !== undefined) return true;
                         }
@@ -200,9 +200,8 @@ export const sprites = (animations, resize, states, body) => {
             if(!this.isS) this.setup();
 
             ctx.save();
-            ctx.translate(body.position.x, body.position.y);
-            ctx.scale(this.resize, this.resize);
-            ctx.rotate(body.angle);
+            ctx.translate(this.entity.x, this.entity.y);
+            ctx.rotate(this.entity.body.angle);
 
             ctx.scale(this.dir, 1);
 
@@ -243,6 +242,10 @@ export const sprites = (animations, resize, states, body) => {
                 }
             });
         },
+
+        // setSprites(name, argname, number) {
+            
+        // },
 
         hasState(state) {
             for (const s of this.states) {

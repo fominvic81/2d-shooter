@@ -4,18 +4,20 @@ import {
 } from 'matter-js';
 import { initApp } from './base.js';
 import { createLevel } from './level.js';
-import { testLevel } from './levels.js';
+import { testLevel } from '../levels.js';
 import { createPlayer } from './entities/player.js';
 import { load } from './loader.js';
 import { createExplosion } from './entities/explosion.js';
-import { item } from './entities/item.js';
+
+
 
 const handleLoad = () => {
-    load(require('../assets/weapons/options.json'), '../assets/weapons/');
-    load(require('../assets/player/animations.json'), '../assets/player/');
+    load(require('../../assets/weapons/options.json'), '../../assets/weapons/');
+    load(require('../../assets/player/animations.json'), '../../assets/player/');
 }
 
 const handleResize = (width, height) => {
+
 }
 
 const handleStart = () => {
@@ -31,21 +33,35 @@ const handleRender = (ctx) => {
 }
 
 export const app = initApp(handleStart, handleResize, handleUpdate, handleRender, handleLoad);
-export const level = createLevel(testLevel, app);
+export const level = createLevel(app);
 
 window.onload = () => {
     app.start();
 };
 
+app.socket.on('serverAddEntity', function (data) {
+    if (data.entityName === 'player') {
+        data.args.isLocal = data.isLocal;
+        level.addEntity(createPlayer(level, data.args), data.id, data.bodyId);
+    } else if (data.entityName === 'explosion') {
+        level.addEntity(createExplosion(level, data.args), data.id, data.bodyId);
+    }
+});
 
-const a = Bodies.circle(100, 100, 25, {mass: 50});
-level.addBody(a);
-level.addBody(Bodies.rectangle(400, 400, 1500, 100, {mass: 50, angle: Math.PI/2}));
-level.addEntity(createPlayer(level, 0, -100, 3));
-level.addEntity(createExplosion(level, 0, -200, 100, 10000, 100));
-level.addEntity(item(level, -500, -100, 3, require('../assets/weapons/options.json').sprites.knife, 'weapon'));
-level.addEntity(item(level, -500, 0, 3, require('../assets/weapons/options.json').sprites.ak47, 'weapon'));
-level.addEntity(item(level, -500, 100, 3, require('../assets/weapons/options.json').sprites.rocket, 'weapon'));
+app.socket.on('serverRemoveEntity', function (data) {
+    const entity = level.entities.get(data.id);
+    if (entity.name === 'player') {
+        level.removeEntity(data.id);
+    } else {
+        level.removeEntity(data.id);
+    }
+});
+
+app.socket.on('serverSetEntity', function (data) {
+    const entity = level.entities.get(data.id);
+    entity.angle = data.angle;
+    entity.dir = data.dir;
+});
 
 
 Events.on(app.engine, 'collisionStart', function(event) {

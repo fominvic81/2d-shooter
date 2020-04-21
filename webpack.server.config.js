@@ -4,7 +4,7 @@ const path = require('path');
 module.exports = {
   target: 'node',
   externals: [nodeExternals()],
-  entry: './src/server.js',
+  entry: './src/server/server.js',
   output: {
     path: path.join(__dirname, 'server-dist'),
     filename: 'server.js',
